@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "serialNumber": "urn:uuid:5d397e18-e509-472a-b234-a0ad2565527d",
+  "metadata": {
+    "timestamp": "2025-11-17T17:55:36.300Z",
+    "tools": {
+      "components": [
+        {
+          "type": "library",
+          "name": "sdk-build-plugins",
+          "group": "@servicenow",
+          "version": "4.0.2",
+          "author": "ServiceNow"
+        }
+      ]
+    },
+    "component": {
+      "type": "application",
+      "name": "x-271493-dynamic-csv",
+      "version": "1.0.0",
+      "bom-ref": "pkg:servicenow/x-271493-dynamic-csv@1.0.0?sys_scope_id=00a5b3498315721050aa6ed0deaad3c8",
+      "description": "[BUILD AGENT GENERATED]:  A configuration-driven framework that allows administrators to define and configure CSV exports for any table through database-driven settings, eliminating the need for hardcoded mappings or headers.",
+      "licenses": [
+        {
+          "license": {
+            "name": "UNLICENSED"
+          }
+        }
+      ],
+      "purl": "pkg:servicenow/x-271493-dynamic-csv@1.0.0?sys_scope_id=00a5b3498315721050aa6ed0deaad3c8"
+    }
+  },
+  "components": [],
+  "dependencies": [
+    {
+      "ref": "pkg:servicenow/x-271493-dynamic-csv@1.0.0?sys_scope_id=00a5b3498315721050aa6ed0deaad3c8"
+    }
+  ]
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_271493_dynamic_c/x-271493-dynamic-csv/1.0.0/bom.json</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-17 17:05:24</sys_created_on>
+        <sys_id>b5108cd5e32441198bfa6ab5a3f5fcfb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_271493_dynamic_c/x-271493-dynamic-csv/1.0.0/bom.json</sys_name>
+        <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+        <sys_update_name>sys_module_b5108cd5e32441198bfa6ab5a3f5fcfb</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-17 17:05:24</sys_updated_on>
+    </sys_module>
+</record_update>

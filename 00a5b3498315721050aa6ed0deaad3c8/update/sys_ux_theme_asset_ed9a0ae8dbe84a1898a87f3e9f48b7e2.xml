@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ux_theme_asset">
+    <sys_ux_theme_asset action="INSERT_OR_UPDATE">
+        <category>font</category>
+        <name>components/ConsoleLanding.css</name>
+        <sys_class_name>sys_ux_theme_asset</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-17 17:55:43</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>ed9a0ae8dbe84a1898a87f3e9f48b7e2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>components/ConsoleLanding.css</sys_name>
+        <sys_overrides/>
+        <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+        <sys_update_name>sys_ux_theme_asset_ed9a0ae8dbe84a1898a87f3e9f48b7e2</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-17 17:55:43</sys_updated_on>
+    </sys_ux_theme_asset>
+    <sys_attachment action="INSERT_OR_UPDATE">
+        <average_image_color/>
+        <chunk_size_bytes>933336</chunk_size_bytes>
+        <compressed>true</compressed>
+        <content_type>text/css</content_type>
+        <file_name>components/ConsoleLanding.css</file_name>
+        <hash>a8336378d82cba745159d3310ce020d9</hash>
+        <image_height/>
+        <image_width/>
+        <size_bytes>15367</size_bytes>
+        <size_compressed>2855</size_compressed>
+        <state>available</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-17 17:55:43</sys_created_on>
+        <sys_id>8dd53fb6e8cb33d80581f951b3870967</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-17 17:55:43</sys_updated_on>
+        <table_name>sys_ux_theme_asset</table_name>
+        <table_sys_id>ed9a0ae8dbe84a1898a87f3e9f48b7e2</table_sys_id>
+    </sys_attachment>
+    <sys_attachment_doc action="INSERT_OR_UPDATE">
+        <data>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</data>
+        <length>3808</length>
+        <position>0</position>
+        <sys_attachment display_value="components/ConsoleLanding.css" sys_id="8dd53fb6e8cb33d80581f951b3870967">8dd53fb6e8cb33d80581f951b3870967</sys_attachment>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-17 17:55:43</sys_created_on>
+        <sys_id>526d60558f72eaa234b2f75cdcd8510d</sys_id>
+    </sys_attachment_doc>
+</record_update>

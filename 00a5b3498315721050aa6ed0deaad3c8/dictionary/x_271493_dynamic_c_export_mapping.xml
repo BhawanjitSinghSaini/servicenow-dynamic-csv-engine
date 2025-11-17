@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="e1e937c18355721050aa6ed0deaad3c8" label="CSV Export Mapping" max_length="40" name="x_271493_dynamic_c_export_mapping" type="collection">
+        <element attributes="edge_encryption_enabled=true" display="true" label="Header Label" mandatory="true" max_length="100" name="header_label" type="string"/>
+        <element default="// Return the computed value for this column&#10;// Available variables: current (GlideRecord), gr (alias for current)&#10;// Example: return current.getValue('field_name') + ' - Custom';&#10;return '';" label="Script Field" max_length="8000" name="script_field" type="script"/>
+        <element choice="1" default="field" label="Source Type" mandatory="true" max_length="40" name="source_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Scripted Value" sequence="2" value="scripted"/>
+                <element inactive_on_update="false" label="Direct Field" sequence="0" value="field"/>
+                <element inactive_on_update="false" label="Related Table Field" sequence="1" value="related"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Source Table Alias" max_length="50" name="source_table_alias" type="string"/>
+        <element attributes="encode_utf8=false" label="Export Definition" mandatory="true" max_length="32" name="export_definition" reference="x_271493_dynamic_c_export_definition" type="reference"/>
+        <element default="100" label="Order Number" mandatory="true" max_length="40" name="order_number" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Source Field" max_length="100" name="source_field" type="string"/>
+        <index name="index">
+            <element name="export_definition"/>
+            <element name="order_number"/>
+        </index>
+    </element>
+</database>

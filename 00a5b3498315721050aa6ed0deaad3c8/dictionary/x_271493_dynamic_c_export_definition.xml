@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="51e9b3498315721050aa6ed0deaad304" label="CSV Export Definition" max_length="40" name="x_271493_dynamic_c_export_definition" type="collection">
+        <element choice="1" default="none" label="Attachment Mode" max_length="40" name="attachment_mode" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="None (Return CSV content)" sequence="0" value="none"/>
+                <element inactive_on_update="false" label="Return Attachment Reference" sequence="1" value="return"/>
+                <element inactive_on_update="false" label="Write to Attachment Table" sequence="2" value="write_attachment"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Encoded Query" max_length="4000" name="encoded_query" type="string"/>
+        <element default="// Return true to include record, false to exclude&#10;// Example: return current.getValue('state') == 'Active';&#10;return true;" label="Filter Script" max_length="8000" name="filter_script" type="script"/>
+        <element attributes="base_start=true" label="Target Table" mandatory="true" max_length="80" name="target_table" type="table_name"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Export Name" mandatory="true" max_length="100" name="export_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Attachment Table" max_length="80" name="attachment_table" type="string"/>
+        <element default="true" label="Active" max_length="40" name="active" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Attachment Record ID" max_length="32" name="attachment_record_id" type="string"/>
+        <element choice="1" default="comma" label="Delimiter" max_length="40" name="delimiter" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Semicolon (;)" sequence="1" value="semicolon"/>
+                <element inactive_on_update="false" label="Comma (,)" sequence="0" value="comma"/>
+            </choice>
+        </element>
+        <element default="1000" label="Batch Size" max_length="40" name="batch_size" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Description" max_length="1000" name="description" type="string"/>
+    </element>
+</database>

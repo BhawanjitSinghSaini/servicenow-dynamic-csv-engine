@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[{
+  "name": "x-271493-dynamic-csv",
+  "version": "1.0.0",
+  "description": "[BUILD AGENT GENERATED]:  A configuration-driven framework that allows administrators to define and configure CSV exports for any table through database-driven settings, eliminating the need for hardcoded mappings or headers.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "now-sdk build",
+    "deploy": "now-sdk install",
+    "transform": "now-sdk transform",
+    "types": "now-sdk dependencies"
+  },
+  "devDependencies": {
+    "@servicenow/sdk": "4.0.2",
+    "@servicenow/glide": "26.0.1",
+    "eslint": "8.50.0",
+    "@servicenow/eslint-plugin-sdk-app-plugin": "4.0.2"
+  },
+  "dependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_271493_dynamic_c/x-271493-dynamic-csv/1.0.0/package.json</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-17 17:05:24</sys_created_on>
+        <sys_id>1551fef212d44bfcb587d1d86d6a1235</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_271493_dynamic_c/x-271493-dynamic-csv/1.0.0/package.json</sys_name>
+        <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+        <sys_update_name>sys_module_1551fef212d44bfcb587d1d86d6a1235</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-17 17:05:24</sys_updated_on>
+    </sys_module>
+</record_update>

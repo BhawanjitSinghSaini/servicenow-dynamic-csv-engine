@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[var CSVExportEngine = Class.create();
+CSVExportEngine.prototype = {
+    initialize: function() {
+        this.definition = null;
+        this.mappings = [];
+        this.relatedSources = [];
+        this.relatedData = {};
+        this.delimiter = ',';
+        this.processedCount = 0;
+        this.totalCount = 0;
+        this.csvContent = '';
+        this.errors = [];
+    },
+
+    /**
+     * Main entry point - generate CSV export based on definition ID
+     * @param {string} definitionId - sys_id of the export definition
+     * @returns {Object} - result object with success status and data
+     */
+    generate: function(definitionId) {
+        try {
+            this._reset();
+            
+            // Load configuration
+            this._loadDefinition(definitionId);
+            this._loadMappings();
+            this._loadRelatedSources();
+            
+            // Validate configuration
+            if (this.mappings.length === 0) {
+                throw new Error('No field mappings configured for export definition: ' + definitionId);
+            }
+            
+            this.delimiter = this.definition.getValue('delimiter') === 'semicolon' ? ';' : ',';
+            
+            // Build CSV headers
+            var headers = this._buildCSVHeaders();
+            this.csvContent = headers + '\n';
+            
+            // Process records in batches
+            var processedIds = [];
+            var batchSize = parseInt(this.definition.getValue('batch_size')) || 1000;
+            var hasMoreRecords = true;
+            
+            while (hasMoreRecords) {
+                var recordsBatch = this._getRecordsBatch(processedIds, batchSize);
+                
+                if (recordsBatch.length === 0) {
+                    hasMoreRecords = false;
+                    break;
+                }
+                
+                // Build related data lookup maps for this batch
+                var batchIds = recordsBatch.map(function(record) {
+                    return record.getUniqueValue();
+                });
+                this._buildRelatedData(batchIds);
+                
+                // Generate CSV chunk for this batch
+                var csvChunk = this._buildCSVChunk(recordsBatch);
+                this.csvContent += csvChunk;
+                
+                // Track processed records
+                processedIds = processedIds.concat(batchIds);
+                this.processedCount = processedIds.length;
+            }
+            
+            return this._returnResult();
+            
+        } catch (e) {
+            gs.error('CSVExportEngine.generate() error: ' + e.message);
+            return {
+                success: false,
+                error: e.message,
+                processedCount: this.processedCount
+            };
+        }
+    },
+
+    /**
+     * Load export definition by ID
+     * @param {string} definitionId
+     */
+    _loadDefinition: function(definitionId) {
+        var gr = new GlideRecord('x_271493_dynamic_c_export_definition');
+        if (!gr.get(definitionId)) {
+            throw new Error('Export definition not found: ' + definitionId);
+        }
+        
+        if (!gr.getValue('active')) {
+            throw new Error('Export definition is inactive: ' + definitionId);
+        }
+        
+        this.definition = gr;
+        gs.info('Loaded export definition: ' + gr.getValue('export_name'));
+    },
+
+    /**
+     * Load field mappings for the export definition
+     */
+    _loadMappings: function() {
+        var gr = new GlideRecord('x_271493_dynamic_c_export_mapping');
+        gr.addQuery('export_definition', this.definition.getUniqueValue());
+        gr.orderBy('order_number');
+        gr.query();
+        
+        this.mappings = [];
+        while (gr.next()) {
+            this.mappings.push({
+                orderNumber: parseInt(gr.getValue('order_number')),
+                headerLabel: gr.getValue('header_label'),
+                sourceType: gr.getValue('source_type'),
+                sourceTableAlias: gr.getValue('source_table_alias'),
+                sourceField: gr.getValue('source_field'),
+                scriptField: gr.getValue('script_field')
+            });
+        }
+        
+        gs.info('Loaded ' + this.mappings.length + ' field mappings');
+    },
+
+    /**
+     * Load related data source definitions
+     */
+    _loadRelatedSources: function() {
+        var gr = new GlideRecord('x_271493_dynamic_c_csv_related_source');
+        gr.addQuery('export_definition', this.definition.getUniqueValue());
+        gr.query();
+        
+        this.relatedSources = [];
+        while (gr.next()) {
+            this.relatedSources.push({
+                alias: gr.getValue('alias'),
+                table: gr.getValue('table'),
+                relationshipField: gr.getValue('relationship_field'),
+                oneToOne: gr.getValue('one_to_one') === 'true',
+                flattenMode: gr.getValue('flatten_mode'),
+                script: gr.getValue('script')
+            });
+        }
+        
+        gs.info('Loaded ' + this.relatedSources.length + ' related sources');
+    },
+
+    /**
+     * Build related data lookup maps for given record IDs
+     * @param {Array} recordIds - array of main record sys_ids
+     */
+    _buildRelatedData: function(recordIds) {
+        var csvUtils = new CSVExportUtils();
+        this.relatedData = {};
+        
+        for (var i = 0; i < this.relatedSources.length; i++) {
+            var source = this.relatedSources[i];
+            this.relatedData[source.alias] = csvUtils.buildRelatedLookup(
+                source.table,
+                source.relationshipField,
+                recordIds,
+                source.oneToOne,
+                source.flattenMode,
+                source.script
+            );
+        }
+    },
+
+    /**
+     * Get next batch of records to process
+     * @param {Array} processedIds - already processed record IDs
+     * @param {number} batchSize - batch size
+     * @returns {Array} - array of GlideRecord objects
+     */
+    _getRecordsBatch: function(processedIds, batchSize) {
+        var targetTable = this.definition.getValue('target_table');
+        var gr = new GlideRecord(targetTable);
+        
+        // Apply encoded query if provided
+        var encodedQuery = this.definition.getValue('encoded_query');
+        if (encodedQuery) {
+            gr.addEncodedQuery(encodedQuery);
+        }
+        
+        // Exclude already processed records
+        if (processedIds.length > 0) {
+            gr.addQuery('sys_id', 'NOT IN', processedIds.join(','));
+        }
+        
+        gr.setLimit(batchSize);
+        gr.query();
+        
+        var records = [];
+        while (gr.next()) {
+            records.push(new GlideRecord(targetTable).get(gr.getUniqueValue()) ? 
+                new GlideRecord(targetTable).get(gr.getUniqueValue()) : null);
+        }
+        
+        // Filter out null records and apply filter script if configured
+        var validRecords = [];
+        var filterScript = this.definition.getValue('filter_script');
+        var csvUtils = new CSVExportUtils();
+        
+        for (var i = 0; i < records.length; i++) {
+            var record = records[i];
+            if (record && csvUtils.applyFilterScript(record, filterScript)) {
+                validRecords.push(record);
+            }
+        }
+        
+        return validRecords;
+    },
+
+    /**
+     * Build CSV headers based on field mappings
+     * @returns {string} - CSV header row
+     */
+    _buildCSVHeaders: function() {
+        var headers = [];
+        
+        for (var i = 0; i < this.mappings.length; i++) {
+            var mapping = this.mappings[i];
+            headers.push(this._safeEncode(mapping.headerLabel));
+        }
+        
+        return headers.join(this.delimiter);
+    },
+
+    /**
+     * Build CSV chunk for a batch of records
+     * @param {Array} records - array of GlideRecord objects
+     * @returns {string} - CSV data chunk
+     */
+    _buildCSVChunk: function(records) {
+        var csvUtils = new CSVExportUtils();
+        var chunk = '';
+        
+        for (var i = 0; i < records.length; i++) {
+            var record = records[i];
+            var values = [];
+            
+            for (var j = 0; j < this.mappings.length; j++) {
+                var mapping = this.mappings[j];
+                var value = '';
+                
+                try {
+                    switch (mapping.sourceType) {
+                        case 'field':
+                            if (!mapping.sourceField) {
+                                throw new Error('Source field is required for field type mapping: ' + mapping.headerLabel);
+                            }
+                            value = record.getValue(mapping.sourceField) || '';
+                            break;
+                            
+                        case 'related':
+                            if (!mapping.sourceTableAlias || !mapping.sourceField) {
+                                throw new Error('Source table alias and field are required for related type mapping: ' + mapping.headerLabel);
+                            }
+                            
+                            var relatedValue = this.relatedData[mapping.sourceTableAlias];
+                            if (relatedValue && relatedValue[record.getUniqueValue()]) {
+                                value = csvUtils.extractRelatedValue(
+                                    relatedValue[record.getUniqueValue()], 
+                                    mapping.sourceField
+                                );
+                            }
+                            break;
+                            
+                        case 'scripted':
+                            if (!mapping.scriptField) {
+                                throw new Error('Script field is required for scripted type mapping: ' + mapping.headerLabel);
+                            }
+                            value = csvUtils.evaluateScriptedField(record, mapping.scriptField);
+                            break;
+                            
+                        default:
+                            throw new Error('Invalid source type: ' + mapping.sourceType + ' for mapping: ' + mapping.headerLabel);
+                    }
+                } catch (e) {
+                    gs.error('Error processing mapping "' + mapping.headerLabel + '": ' + e.message);
+                    this.errors.push('Field "' + mapping.headerLabel + '": ' + e.message);
+                    value = '';
+                }
+                
+                values.push(this._safeEncode(value));
+            }
+            
+            chunk += values.join(this.delimiter) + '\n';
+        }
+        
+        return chunk;
+    },
+
+    /**
+     * Safely encode values for CSV (handle delimiters, quotes, escaping)
+     * @param {string} value - value to encode
+     * @returns {string} - encoded value
+     */
+    _safeEncode: function(value) {
+        if (!value) return '';
+        
+        value = String(value);
+        
+        // Check if value contains delimiter, quotes, or newlines
+        var needsQuoting = value.indexOf(this.delimiter) !== -1 || 
+                          value.indexOf('"') !== -1 || 
+                          value.indexOf('\n') !== -1 || 
+                          value.indexOf('\r') !== -1;
+        
+        if (needsQuoting) {
+            // Escape existing quotes by doubling them
+            value = value.replace(/"/g, '""');
+            // Wrap in quotes
+            value = '"' + value + '"';
+        }
+        
+        return value;
+    },
+
+    /**
+     * Write CSV content to attachment if configured
+     * @returns {string} - attachment sys_id or null
+     */
+    _writeAttachment: function() {
+        var attachmentMode = this.definition.getValue('attachment_mode');
+        
+        if (attachmentMode === 'none') {
+            return null;
+        }
+        
+        var fileName = this.definition.getValue('export_name').replace(/[^a-zA-Z0-9]/g, '_') + '_' + 
+                      new GlideDateTime().getDisplayValue().replace(/[^0-9]/g, '') + '.csv';
+        
+        var attachmentTable = this.definition.getValue('attachment_table');
+        var attachmentRecordId = this.definition.getValue('attachment_record_id');
+        
+        if (attachmentMode === 'write_attachment' && (!attachmentTable || !attachmentRecordId)) {
+            gs.warn('Attachment mode is write_attachment but table or record ID not specified. Falling back to return mode.');
+            attachmentMode = 'return';
+        }
+        
+        var sa = new GlideSysAttachment();
+        var attachmentId;
+        
+        if (attachmentMode === 'write_attachment') {
+            attachmentId = sa.write(attachmentTable, attachmentRecordId, fileName, 'text/csv', this.csvContent);
+        } else {
+            // For return mode, create a temporary attachment
+            attachmentId = sa.writeBase64('sys_attachment', '', fileName, 'text/csv', 
+                GlideStringUtil.base64Encode(this.csvContent));
+        }
+        
+        return attachmentId;
+    },
+
+    /**
+     * Return final result based on configuration
+     * @returns {Object} - result object
+     */
+    _returnResult: function() {
+        var attachmentId = this._writeAttachment();
+        
+        return {
+            success: true,
+            processedCount: this.processedCount,
+            attachmentId: attachmentId,
+            csvContent: this.definition.getValue('attachment_mode') === 'none' ? this.csvContent : null,
+            errors: this.errors.length > 0 ? this.errors : null,
+            exportName: this.definition.getValue('export_name')
+        };
+    },
+
+    /**
+     * Reset internal state for new export
+     */
+    _reset: function() {
+        this.definition = null;
+        this.mappings = [];
+        this.relatedSources = [];
+        this.relatedData = {};
+        this.delimiter = ',';
+        this.processedCount = 0;
+        this.totalCount = 0;
+        this.csvContent = '';
+        this.errors = [];
+    },
+
+    type: 'CSVExportEngine'
+};]]></content>
+        <external_source>false</external_source>
+        <path>x_271493_dynamic_c/x-271493-dynamic-csv/1.0.0/src/server/script-includes/csv-export-engine.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-17 17:05:24</sys_created_on>
+        <sys_id>ea627c490fe24d59b7d105fde00f47dc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_271493_dynamic_c/x-271493-dynamic-csv/1.0.0/src/server/script-includes/csv-export-engine.js</sys_name>
+        <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+        <sys_update_name>sys_module_ea627c490fe24d59b7d105fde00f47dc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-17 17:05:24</sys_updated_on>
+    </sys_module>
+</record_update>
