@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[var CSVExportUtils = Class.create();
+CSVExportUtils.prototype = {
+    initialize: function() {
+    },
+
+    /**
+     * Build related data lookup map for efficient access during CSV generation
+     * @param {string} relatedTable - name of the related table
+     * @param {string} relationshipField - field that references the main table
+     * @param {Array} mainRecordIds - array of main record sys_ids
+     * @param {boolean} oneToOne - if true, return only first record
+     * @param {string} flattenMode - 'first', 'concat', or 'scripted'
+     * @param {string} script - custom script for 'scripted' mode
+     * @returns {Object} - lookup map keyed by main record sys_id
+     */
+    buildRelatedLookup: function(relatedTable, relationshipField, mainRecordIds, oneToOne, flattenMode, script) {
+        var lookup = {};
+        
+        if (mainRecordIds.length === 0) {
+            return lookup;
+        }
+        
+        try {
+            var gr = new GlideRecord(relatedTable);
+            gr.addQuery(relationshipField, 'IN', mainRecordIds.join(','));
+            gr.query();
+            
+            // Group related records by main record ID
+            var groupedRecords = {};
+            while (gr.next()) {
+                var mainId = gr.getValue(relationshipField);
+                if (!groupedRecords[mainId]) {
+                    groupedRecords[mainId] = [];
+                }
+                
+                // Create a plain object copy to avoid GlideRecord reference issues
+                var recordData = {};
+                var fields = gr.getFields();
+                for (var i = 0; i < fields.size(); i++) {
+                    var field = fields.get(i);
+                    recordData[field.getName()] = gr.getValue(field.getName());
+                    recordData[field.getName() + '_display_value'] = gr.getDisplayValue(field.getName());
+                }
+                recordData.sys_id = gr.getUniqueValue();
+                
+                groupedRecords[mainId].push(recordData);
+            }
+            
+            // Apply flattening logic
+            for (var mainId in groupedRecords) {
+                var relatedRecords = groupedRecords[mainId];
+                
+                if (oneToOne || flattenMode === 'first') {
+                    lookup[mainId] = relatedRecords[0];
+                } else if (flattenMode === 'concat') {
+                    lookup[mainId] = relatedRecords;
+                } else if (flattenMode === 'scripted' && script) {
+                    lookup[mainId] = this._applyFlattenScript(relatedRecords, script, mainId);
+                } else {
+                    lookup[mainId] = relatedRecords;
+                }
+            }
+            
+        } catch (e) {
+            gs.error('CSVExportUtils.buildRelatedLookup() error for table ' + relatedTable + ': ' + e.message);
+        }
+        
+        return lookup;
+    },
+
+    /**
+     * Extract value from related record data based on field name
+     * @param {Object|Array} relatedData - related record data (object for single, array for multiple)
+     * @param {string} fieldName - field name to extract
+     * @returns {string} - extracted value
+     */
+    extractRelatedValue: function(relatedData, fieldName) {
+        if (!relatedData) {
+            return '';
+        }
+        
+        if (Array.isArray(relatedData)) {
+            // For arrays, concatenate values with comma separator
+            var values = [];
+            for (var i = 0; i < relatedData.length; i++) {
+                var value = relatedData[i][fieldName] || relatedData[i][fieldName + '_display_value'] || '';
+                if (value) {
+                    values.push(String(value));
+                }
+            }
+            return values.join(', ');
+        } else {
+            // For single object, return the field value
+            return String(relatedData[fieldName] || relatedData[fieldName + '_display_value'] || '');
+        }
+    },
+
+    /**
+     * Evaluate scripted field for a record
+     * @param {GlideRecord} current - current record
+     * @param {string} scriptCode - script code to evaluate
+     * @returns {string} - computed value
+     */
+    evaluateScriptedField: function(current, scriptCode) {
+        if (!scriptCode) {
+            return '';
+        }
+        
+        try {
+            // Create evaluation context
+            var gr = current; // Alias for backward compatibility
+            var evaluator = new GlideEvaluator();
+            evaluator.putVariable('current', current);
+            evaluator.putVariable('gr', current);
+            
+            // Evaluate the script
+            var result = evaluator.evaluateScript(current, 'script', scriptCode);
+            return String(result || '');
+            
+        } catch (e) {
+            gs.error('CSVExportUtils.evaluateScriptedField() error: ' + e.message);
+            return '';
+        }
+    },
+
+    /**
+     * Apply filter script to determine if record should be included
+     * @param {GlideRecord} current - current record
+     * @param {string} filterScript - filter script code
+     * @returns {boolean} - true if record should be included
+     */
+    applyFilterScript: function(current, filterScript) {
+        if (!filterScript) {
+            return true;
+        }
+        
+        try {
+            var gr = current; // Alias for backward compatibility
+            var evaluator = new GlideEvaluator();
+            evaluator.putVariable('current', current);
+            evaluator.putVariable('gr', current);
+            
+            var result = evaluator.evaluateScript(current, 'filter', filterScript);
+            return Boolean(result);
+            
+        } catch (e) {
+            gs.error('CSVExportUtils.applyFilterScript() error: ' + e.message + ' - Defaulting to include record');
+            return true;
+        }
+    },
+
+    /**
+     * Apply custom flatten script to related records
+     * @param {Array} relatedRecords - array of related record objects
+     * @param {string} script - flatten script code
+     * @param {string} mainRecordId - main record sys_id for context
+     * @returns {*} - script result
+     */
+    _applyFlattenScript: function(relatedRecords, script, mainRecordId) {
+        if (!script || relatedRecords.length === 0) {
+            return relatedRecords;
+        }
+        
+        try {
+            var evaluator = new GlideEvaluator();
+            evaluator.putVariable('relatedRecords', relatedRecords);
+            evaluator.putVariable('mainRecordId', mainRecordId);
+            evaluator.putVariable('alias', 'related'); // Generic alias for context
+            
+            // Create a temporary context record for script evaluation
+            var contextRecord = new GlideRecord('sys_user'); // Use any table for context
+            var result = evaluator.evaluateScript(contextRecord, 'flatten', script);
+            
+            return result || relatedRecords;
+            
+        } catch (e) {
+            gs.error('CSVExportUtils._applyFlattenScript() error: ' + e.message);
+            return relatedRecords;
+        }
+    },
+
+    /**
+     * Safe query helper with error handling
+     * @param {string} tableName - table to query
+     * @param {string} encodedQuery - encoded query string (optional)
+     * @param {number} limit - query limit (optional)
+     * @returns {Array} - array of record objects
+     */
+    safeQuery: function(tableName, encodedQuery, limit) {
+        var records = [];
+        
+        try {
+            var gr = new GlideRecord(tableName);
+            
+            if (encodedQuery) {
+                gr.addEncodedQuery(encodedQuery);
+            }
+            
+            if (limit) {
+                gr.setLimit(limit);
+            }
+            
+            gr.query();
+            
+            while (gr.next()) {
+                var recordData = {};
+                var fields = gr.getFields();
+                for (var i = 0; i < fields.size(); i++) {
+                    var field = fields.get(i);
+                    recordData[field.getName()] = gr.getValue(field.getName());
+                    recordData[field.getName() + '_display_value'] = gr.getDisplayValue(field.getName());
+                }
+                recordData.sys_id = gr.getUniqueValue();
+                records.push(recordData);
+            }
+            
+        } catch (e) {
+            gs.error('CSVExportUtils.safeQuery() error for table ' + tableName + ': ' + e.message);
+        }
+        
+        return records;
+    },
+
+    /**
+     * Pagination helper to calculate offset and limit
+     * @param {number} pageNumber - page number (1-based)
+     * @param {number} pageSize - records per page
+     * @returns {Object} - object with offset and limit properties
+     */
+    calculatePagination: function(pageNumber, pageSize) {
+        pageNumber = Math.max(1, parseInt(pageNumber) || 1);
+        pageSize = Math.max(1, parseInt(pageSize) || 100);
+        
+        return {
+            offset: (pageNumber - 1) * pageSize,
+            limit: pageSize,
+            page: pageNumber,
+            size: pageSize
+        };
+    },
+
+    /**
+     * Validate table and field existence
+     * @param {string} tableName - table name to validate
+     * @param {string} fieldName - field name to validate (optional)
+     * @returns {Object} - validation result
+     */
+    validateTableField: function(tableName, fieldName) {
+        var result = {
+            tableExists: false,
+            fieldExists: false,
+            error: null
+        };
+        
+        try {
+            // Check table existence
+            var td = new GlideTableDescriptor(tableName);
+            if (td.isValid()) {
+                result.tableExists = true;
+                
+                // Check field existence if provided
+                if (fieldName) {
+                    var element = td.getElementDescriptor(fieldName);
+                    result.fieldExists = element && element.isValid();
+                }
+            }
+            
+        } catch (e) {
+            result.error = e.message;
+            gs.error('CSVExportUtils.validateTableField() error: ' + e.message);
+        }
+        
+        return result;
+    },
+
+    /**
+     * Get field information for a table
+     * @param {string} tableName - table name
+     * @returns {Array} - array of field information objects
+     */
+    getTableFields: function(tableName) {
+        var fields = [];
+        
+        try {
+            var gr = new GlideRecord(tableName);
+            var fieldsArray = gr.getFields();
+            
+            for (var i = 0; i < fieldsArray.size(); i++) {
+                var field = fieldsArray.get(i);
+                fields.push({
+                    name: field.getName(),
+                    label: field.getLabel(),
+                    type: field.getED().getInternalType(),
+                    maxLength: field.getED().getLength()
+                });
+            }
+            
+        } catch (e) {
+            gs.error('CSVExportUtils.getTableFields() error for table ' + tableName + ': ' + e.message);
+        }
+        
+        return fields;
+    },
+
+    type: 'CSVExportUtils'
+};]]></content>
+        <external_source>false</external_source>
+        <path>x_271493_dynamic_c/x-271493-dynamic-csv/1.0.0/src/server/script-includes/csv-export-utils.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-17 17:05:24</sys_created_on>
+        <sys_id>c2c56503017349e585fe3d78e3c3a432</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_271493_dynamic_c/x-271493-dynamic-csv/1.0.0/src/server/script-includes/csv-export-utils.js</sys_name>
+        <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+        <sys_update_name>sys_module_c2c56503017349e585fe3d78e3c3a432</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-17 17:05:24</sys_updated_on>
+    </sys_module>
+</record_update>

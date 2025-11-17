@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="69e937c18355721050aa6ed0deaad375" label="CSV Related Source" max_length="40" name="x_271493_dynamic_c_csv_related_source" type="collection">
+        <element attributes="edge_encryption_enabled=true" display="true" label="Alias" mandatory="true" max_length="20" name="alias" type="string"/>
+        <element choice="1" default="first" label="Flatten Mode" mandatory="true" max_length="40" name="flatten_mode" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="First Record Only" sequence="0" value="first"/>
+                <element inactive_on_update="false" label="Concatenate Values" sequence="1" value="concat"/>
+                <element inactive_on_update="false" label="Custom Script" sequence="2" value="scripted"/>
+            </choice>
+        </element>
+        <element attributes="base_start=true" label="Related Table" mandatory="true" max_length="80" name="table" type="table_name"/>
+        <element attributes="encode_utf8=false" label="Export Definition" mandatory="true" max_length="32" name="export_definition" reference="x_271493_dynamic_c_export_definition" type="reference"/>
+        <element default="// Process multiple related records and return a single value&#10;// Available variables:&#10;//   current - Main record (GlideRecord)&#10;//   relatedRecords - Array of related GlideRecord objects&#10;//   alias - The alias for this related source&#10;// Example: return relatedRecords.map(r =&gt; r.getValue('name')).join(', ');&#10;return '';" label="Custom Flatten Script" max_length="8000" name="script" type="script"/>
+        <element attributes="edge_encryption_enabled=true" label="Relationship Field" mandatory="true" max_length="100" name="relationship_field" type="string"/>
+        <element label="One-to-One Relationship" max_length="40" name="one_to_one" type="boolean"/>
+        <index name="index">
+            <element name="export_definition"/>
+        </index>
+        <index name="index2" unique="true">
+            <element name="export_definition"/>
+            <element name="alias"/>
+        </index>
+    </element>
+</database>

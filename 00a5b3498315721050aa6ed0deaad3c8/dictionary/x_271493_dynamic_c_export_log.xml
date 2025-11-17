@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element audit="true" db_object_id="5b6cbf098355721050aa6ed0deaad3cc" label="CSV Export Log" max_length="40" name="x_271493_dynamic_c_export_log" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Execution End" max_length="40" name="execution_end" type="glide_date_time"/>
+        <element attributes="edge_encryption_enabled=true" label="Error Message" max_length="4000" name="error_message" type="string"/>
+        <element label="Duration (ms)" max_length="40" name="duration_ms" type="integer"/>
+        <element attributes="encode_utf8=false" label="Executed By" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <element default="0" label="Records Exported" max_length="40" name="records_exported" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Attachment ID" max_length="32" name="attachment_id" type="string"/>
+        <element label="File Size (Bytes)" max_length="40" name="file_size_bytes" type="integer"/>
+        <element attributes="edge_encryption_enabled=true" label="Execution Start" mandatory="true" max_length="40" name="execution_start" type="glide_date_time"/>
+        <element attributes="encode_utf8=false" display="true" label="Export Definition" mandatory="true" max_length="32" name="export_definition" reference="x_271493_dynamic_c_export_definition" type="reference"/>
+        <element label="Success" max_length="40" name="success" type="boolean"/>
+        <index name="index">
+            <element name="execution_start"/>
+        </index>
+        <index name="index2">
+            <element name="export_definition"/>
+        </index>
+        <index name="index3">
+            <element name="export_definition"/>
+            <element name="success"/>
+        </index>
+        <index name="index4">
+            <element name="user"/>
+        </index>
+    </element>
+</database>
