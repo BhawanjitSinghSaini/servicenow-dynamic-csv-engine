@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_271493_dynamic_c.CSVExportTestRunner</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>CSVExportTestRunner</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[
+            var engine = new CSVExportEngine();
+            var result = engine.generate('d86554598319721050aa6ed0deaad3e7');
+            
+            // For preview mode, limit to first 10 rows
+            if (true && result.success && result.csvContent) {
+              var lines = result.csvContent.split('\n');
+              result.previewContent = lines.slice(0, 11).join('\n'); // Header + 10 rows
+              result.totalLines = lines.length - 1; // Exclude header
+            }
+            
+            gs.print(JSON.stringify(result));
+          ]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-17 19:13:49</sys_created_on>
+        <sys_id>4747d45d8319721050aa6ed0deaad34c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>CSVExportTestRunner</sys_name>
+        <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+        <sys_update_name>sys_script_include_4747d45d8319721050aa6ed0deaad34c</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-17 19:13:49</sys_updated_on>
+    </sys_script_include>
+</record_update>
