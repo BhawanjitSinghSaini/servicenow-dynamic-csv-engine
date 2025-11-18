@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_ux_page_property">
+    <sys_ux_page_property action="INSERT_OR_UPDATE">
+        <choices/>
+        <description>Ribbon Config ID</description>
+        <name>ribbonConfigId</name>
+        <page display_value="Dynamic Csv">26d45b554e997210d0ff4fe87dd05100</page>
+        <required_translations/>
+        <route/>
+        <suffix/>
+        <sys_class_name>sys_ux_page_property</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-18 09:02:01</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>global</sys_domain_path>
+        <sys_id>66d41b55ce9972104db6aa6608fd40ec</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>ribbonConfigId</sys_name>
+        <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+        <sys_update_name>sys_ux_page_property_66d41b55ce9972104db6aa6608fd40ec</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-18 09:02:01</sys_updated_on>
+        <type>string</type>
+        <unique_name>x_271493_dynamic_c.26d45b554e997210d0ff4fe87dd05100.root.ribbonConfigId</unique_name>
+        <value>6ed41b55409972103a0354fcc7f8a4ec</value>
+    </sys_ux_page_property>
+    <sys_translated_text action="delete_multiple" query="documentkey=66d41b55ce9972104db6aa6608fd40ec"/>
+</record_update>

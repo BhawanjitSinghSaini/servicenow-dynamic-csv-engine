@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="" relationship="" sys_domain="global" table="x_271493_dynamic_c_export_definition" version="2" view="workspace-dynamic-csv-0">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>active</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>6ce41f55c39972102fdfd5fc050131ea</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>attachment_mode</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>e8e41f55c39972102fdfd5fc050131eb</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>attachment_record_id</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>60e41f55c39972102fdfd5fc050131ec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>attachment_table</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>e4e41f55c39972102fdfd5fc050131ec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>batch_size</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>6ce41f55c39972102fdfd5fc050131ec</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>delimiter</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>e0e41f55c39972102fdfd5fc050131ed</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>description</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>68e41f55c39972102fdfd5fc050131ed</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>encoded_query</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>7</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>ece41f55c39972102fdfd5fc050131ed</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>export_name</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>8</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>64e41f55c39972102fdfd5fc050131ee</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>filter_script</element>
+            <list_id display_value="x_271493_dynamic_c_export_definition" element="NULL" name="x_271493_dynamic_c_export_definition" parent="NULL" relationship="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">6ce41f55c39972102fdfd5fc050131e8</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>9</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>e8e41f55c39972102fdfd5fc050131ee</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>x_271493_dynamic_c_export_definition</name>
+            <parent/>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>6ce41f55c39972102fdfd5fc050131e8</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_271493_dynamic_c_export_definition</sys_name>
+            <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+            <sys_update_name>sys_ui_list_x_271493_dynamic_c_export_definition_workspace-dynamic-csv-0</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+            <sys_user/>
+            <view display_value="Workspace Dynamic Csv 0" name="workspace-dynamic-csv-0">62d41b55c79972106722f4bb3054e8f5</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

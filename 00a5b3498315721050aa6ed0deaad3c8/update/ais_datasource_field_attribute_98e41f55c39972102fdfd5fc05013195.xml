@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="ais_datasource_field_attribute">
+    <ais_datasource_field_attribute action="INSERT_OR_UPDATE">
+        <attribute display_value="map_to">f734a634c7320010d1cfd9795cc26094</attribute>
+        <datasource display_value="CSV Export Definition Table">0ce4db55c39972102fdfd5fc050131ec</datasource>
+        <field>export_name</field>
+        <source>x_271493_dynamic_c_export_definition</source>
+        <sys_class_name>ais_datasource_field_attribute</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-18 09:02:06</sys_created_on>
+        <sys_id>98e41f55c39972102fdfd5fc05013195</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_271493_dynamic_c_export_definition.export_name</sys_name>
+        <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+        <sys_update_name>ais_datasource_field_attribute_98e41f55c39972102fdfd5fc05013195</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-18 09:02:06</sys_updated_on>
+        <value>title</value>
+    </ais_datasource_field_attribute>
+</record_update>

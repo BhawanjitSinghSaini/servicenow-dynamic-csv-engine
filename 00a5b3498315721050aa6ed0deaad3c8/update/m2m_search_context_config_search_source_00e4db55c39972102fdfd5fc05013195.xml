@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_search_context_config_search_source">
+    <m2m_search_context_config_search_source action="INSERT_OR_UPDATE">
+        <order>100</order>
+        <search_context_config display_value="Dynamic Csv - Workspace Search">62d41b55b4997210a43f683ec990def6</search_context_config>
+        <source display_value="Dynamic Csv - x_271493_dynamic_c_export_definition">f3d4db55c39972102fdfd5fc05013185</source>
+        <sys_class_name>m2m_search_context_config_search_source</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-18 09:02:05</sys_created_on>
+        <sys_id>00e4db55c39972102fdfd5fc05013195</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+        <sys_update_name>m2m_search_context_config_search_source_00e4db55c39972102fdfd5fc05013195</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-18 09:02:05</sys_updated_on>
+    </m2m_search_context_config_search_source>
+</record_update>

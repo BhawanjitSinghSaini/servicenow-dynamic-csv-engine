@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_related sys_domain="global" table="x_271493_dynamic_c_export_definition" version="2" view="workspace-dynamic-csv-0">
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="CSV Export Definition - Workspace Dynamic Csv 0" name="x_271493_dynamic_c_export_definition" related_list="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">64e41f55c39972102fdfd5fc050131ef</list_id>
+            <order_by/>
+            <position>0</position>
+            <related_list>x_271493_dynamic_c_export_mapping.export_definition</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>a4e41f55c39972102fdfd5fc050131f1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="CSV Export Definition - Workspace Dynamic Csv 0" name="x_271493_dynamic_c_export_definition" related_list="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">64e41f55c39972102fdfd5fc050131ef</list_id>
+            <order_by/>
+            <position>1</position>
+            <related_list>x_271493_dynamic_c_csv_related_source.export_definition</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>24e41f55c39972102fdfd5fc050131f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list_entry action="INSERT_OR_UPDATE">
+            <filter/>
+            <list_id display_value="CSV Export Definition - Workspace Dynamic Csv 0" name="x_271493_dynamic_c_export_definition" related_list="NULL" sys_domain="global" view="62d41b55c79972106722f4bb3054e8f5">64e41f55c39972102fdfd5fc050131ef</list_id>
+            <order_by/>
+            <position>2</position>
+            <related_list>x_271493_dynamic_c_export_log.export_definition</related_list>
+            <sys_class_name>sys_ui_related_list_entry</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_id>a8e41f55c39972102fdfd5fc050131f2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+        </sys_ui_related_list_entry>
+        <sys_ui_related_list action="INSERT_OR_UPDATE">
+            <calculated_name>CSV Export Definition - Workspace Dynamic Csv 0</calculated_name>
+            <filter/>
+            <name>x_271493_dynamic_c_export_definition</name>
+            <order_by/>
+            <position/>
+            <related_list/>
+            <sys_class_name>sys_ui_related_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-18 09:02:07</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>64e41f55c39972102fdfd5fc050131ef</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>CSV Export Definition - Workspace Dynamic Csv 0</sys_name>
+            <sys_package display_value="Dynamic Csv" source="x_271493_dynamic_c">00a5b3498315721050aa6ed0deaad3c8</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Dynamic Csv">00a5b3498315721050aa6ed0deaad3c8</sys_scope>
+            <sys_update_name>sys_ui_related_x_271493_dynamic_c_export_definition_workspace-dynamic-csv-0</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-18 09:02:07</sys_updated_on>
+            <sys_user/>
+            <view display_value="Workspace Dynamic Csv 0" name="workspace-dynamic-csv-0">62d41b55c79972106722f4bb3054e8f5</view>
+            <view_name/>
+        </sys_ui_related_list>
+    </sys_ui_related>
+</record_update>
